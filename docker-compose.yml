@@ -1,0 +1,10 @@
+services:
+  app:
+    container_name: app
+    build: ./backend/
+    networks:
+      - internal_network
+
+networks:
+  internal_network:
+    external: true
