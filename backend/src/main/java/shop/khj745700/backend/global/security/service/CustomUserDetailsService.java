@@ -1,12 +1,12 @@
 package shop.khj745700.backend.global.security.service;
 
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import shop.khj745700.backend.domain.user.domain.User;
 import shop.khj745700.backend.domain.user.domain.UserRepository;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-@Setter
+@Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
