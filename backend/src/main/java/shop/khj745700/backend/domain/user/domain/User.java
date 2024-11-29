@@ -35,4 +35,7 @@ public class User {
     @JoinColumn(name = "image_id")
     private Image image;
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }
