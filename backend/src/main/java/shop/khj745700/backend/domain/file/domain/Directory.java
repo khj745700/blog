@@ -6,10 +6,8 @@ import lombok.*;
 
 import java.util.List;
 
-@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Table(name = "directory")
 @Entity
 public class Directory {
@@ -25,6 +23,11 @@ public class Directory {
     @Column(name = "directory_name")
     private String name;
 
+    @Builder
+    public Directory(Integer id, Directory parentDirectory, String name) {
+        this.parentDirectory = parentDirectory;
+        this.name = name;
+    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentDirectory")
     private List<Directory> childDirectories;

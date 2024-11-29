@@ -21,5 +21,6 @@ public class Image {
     @JoinColumn(name = "file_id")
     private File file;
 
-
+    @Enumerated(EnumType.STRING)
+    private ImageSize size;
 }
