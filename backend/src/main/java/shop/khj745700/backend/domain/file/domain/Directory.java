@@ -23,8 +23,8 @@ public class Directory {
     @Column(name = "directory_name")
     private String name;
 
-    @Builder
-    public Directory(Integer id, Directory parentDirectory, String name) {
+    @Builder(builderMethodName = "createBuilder")
+    public Directory(Directory parentDirectory, String name) {
         this.parentDirectory = parentDirectory;
         this.name = name;
     }
