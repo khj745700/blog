@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import shop.khj745700.backend.domain.user.rest.dto.NicknameModifyRequest;
 import shop.khj745700.backend.domain.user.service.LogoutService;
 import shop.khj745700.backend.domain.user.service.UserModifyService;
@@ -28,4 +29,9 @@ public class UserRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/profile")
+    public ResponseEntity<Integer> updateProfile(@RequestPart(required = false)MultipartFile image, @AuthenticationPrincipal UserLoginContext userLoginContext) {
+        Integer imageId = userModifyService.updateProfileImage(image, userLoginContext.getUserId());
+        return ResponseEntity.ok(imageId);
+    }
 }

@@ -38,4 +38,7 @@ public class User {
     public void updateNickname(String nickname) {
         this.nickname = nickname;
     }
+    public void updateImage(Image image) {
+        this.image = image;
+    }
 }

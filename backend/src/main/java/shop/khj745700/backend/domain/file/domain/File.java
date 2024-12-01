@@ -3,7 +3,7 @@ package shop.khj745700.backend.domain.file.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -24,4 +24,11 @@ public class File {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "directory_id")
     private Directory directory;
+
+    @Builder(builderMethodName = "createNewFile")
+    public File(String name, String extension, Directory directory) {
+        this.name = name;
+        this.extension = extension;
+        this.directory = directory;
+    }
 }

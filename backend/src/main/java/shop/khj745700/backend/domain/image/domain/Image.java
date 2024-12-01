@@ -3,12 +3,11 @@ package shop.khj745700.backend.domain.image.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import shop.khj745700.backend.domain.file.domain.File;
 
-@Builder
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Table(name = "image")
 @Entity
 public class Image {
@@ -17,10 +16,14 @@ public class Image {
     @Column(name = "image_id")
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "file_id")
-    private File file;
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CompressedImage> sizes = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    private ImageSize size;
+    public Image() {
+        this.sizes = new ArrayList<>();
+    }
+
+    public void addImage(CompressedImage image) {
+        sizes.add(image);
+    }
 }

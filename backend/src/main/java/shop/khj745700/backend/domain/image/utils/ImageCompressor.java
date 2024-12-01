@@ -3,6 +3,7 @@ package shop.khj745700.backend.domain.image.utils;
 import marvin.image.MarvinImage;
 import org.marvinproject.image.transform.scale.Scale;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import shop.khj745700.backend.domain.image.domain.ImageSize;
 
 import javax.imageio.ImageIO;
@@ -14,11 +15,12 @@ import java.io.IOException;
 public class ImageCompressor {
 
 
-    public File resizeImage(File inputFile, File outputFile, String fileFormatName, ImageSize imageSize) throws IOException {
-        BufferedImage image = ImageIO.read(inputFile);
+    public File resizeImage(MultipartFile multipartFile, File outputFile, String fileFormatName, ImageSize imageSize) throws IOException {
+        BufferedImage image = ImageIO.read(multipartFile.getInputStream());
 
         if(!canResizeable(imageSize, image)) {
-            return inputFile;
+            ImageIO.write(image, fileFormatName, outputFile);
+            return outputFile;
         }
 
         MarvinImage imageMarvin = new MarvinImage(image);
