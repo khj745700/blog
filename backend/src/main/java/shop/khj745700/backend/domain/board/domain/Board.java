@@ -44,8 +44,6 @@ public class Board {
     public void updateBoard(BoardModifyRequest request, Image image) {
         this.title = request.getTitle();
         this.description = request.getDescription();
-        this.wroteDate = LocalDateTime.now();
-        this.isHidden = request.getIsHidden();
         this.thumbnail = image;
     }
 

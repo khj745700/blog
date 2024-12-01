@@ -14,6 +14,5 @@ public class BoardModifyRequest {
     private String description;
     private String title;
     private Integer thumbnailId;
-    private Boolean isHidden;
     private Integer boardId;
 }
