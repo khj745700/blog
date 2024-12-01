@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import shop.khj745700.backend.domain.user.domain.dao.UserDto;
 import shop.khj745700.backend.domain.user.rest.dto.NicknameModifyRequest;
 import shop.khj745700.backend.domain.user.service.LogoutService;
+import shop.khj745700.backend.domain.user.service.UserFindService;
 import shop.khj745700.backend.domain.user.service.UserModifyService;
 import shop.khj745700.backend.global.security.service.UserLoginContext;
 
@@ -16,6 +18,7 @@ import shop.khj745700.backend.global.security.service.UserLoginContext;
 public class UserRestController {
     private final LogoutService logoutService;
     private final UserModifyService userModifyService;
+    private final UserFindService userFindService;
 
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout() {
@@ -33,5 +36,11 @@ public class UserRestController {
     public ResponseEntity<Integer> updateProfile(@RequestPart(required = false)MultipartFile image, @AuthenticationPrincipal UserLoginContext userLoginContext) {
         Integer imageId = userModifyService.updateProfileImage(image, userLoginContext.getUserId());
         return ResponseEntity.ok(imageId);
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<UserDto> getProfile(@RequestParam Integer id) {
+        UserDto userDto = userFindService.userFind(id);
+        return ResponseEntity.ok(userDto);
     }
 }

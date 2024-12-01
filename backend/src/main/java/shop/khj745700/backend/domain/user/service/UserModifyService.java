@@ -19,6 +19,7 @@ public class UserModifyService {
     private final ImageUploadService imageUploadService;
     private final ImageFinder imageFinder;
     private final UserSaver userSaver;
+
     @Transactional
     public void nicknameModify(NicknameModifyRequest request, Integer userId) {
         User user = userFinder.surelyFindById(userId);

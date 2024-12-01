@@ -21,4 +21,10 @@ public class UserFinder {
     public User surelyFindById(Integer userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
     }
+
+    @Transactional(readOnly = true)
+    public UserDto surelyFindUserDto(Integer userId) {
+        User user = surelyFindById(userId);
+        return new UserDto(user);
+    }
 }
