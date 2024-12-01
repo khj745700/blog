@@ -2,6 +2,7 @@ package shop.khj745700.backend.domain.board.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
 import shop.khj745700.backend.domain.image.domain.Image;
 
 import java.time.LocalDateTime;
@@ -37,5 +38,14 @@ public class Board {
     @PrePersist
     private void prePersist() {
         this.isHidden = Boolean.FALSE;
+    }
+
+
+    public void updateBoard(BoardModifyRequest request, Image image) {
+        this.title = request.getTitle();
+        this.description = request.getDescription();
+        this.wroteDate = LocalDateTime.now();
+        this.isHidden = request.getIsHidden();
+        this.thumbnail = image;
     }
 }

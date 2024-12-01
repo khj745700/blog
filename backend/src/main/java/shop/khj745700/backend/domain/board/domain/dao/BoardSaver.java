@@ -13,4 +13,8 @@ public class BoardSaver {
     public Integer tempBoardCreate() {
         return boardRepository.save(new Board()).getId();
     }
+
+    public Integer boardUpdate(Board board) {
+        return boardRepository.save(board).getId();
+    }
 }
