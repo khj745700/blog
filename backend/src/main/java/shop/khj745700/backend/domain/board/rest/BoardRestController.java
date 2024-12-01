@@ -8,6 +8,8 @@ import shop.khj745700.backend.domain.board.service.BoardModifyService;
 import shop.khj745700.backend.domain.board.service.BoardTempGenerateService;
 import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
 
+import java.time.LocalDateTime;
+
 
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -29,5 +31,10 @@ public class BoardRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/enroll")
+    public ResponseEntity<Void> enrollBoard(@RequestBody BoardIdView boardIdView) {
+        boardModifyService.tempBoardToBoard(boardIdView.getBoardId(), LocalDateTime.now());
+        return ResponseEntity.ok().build();
+    }
 
 }

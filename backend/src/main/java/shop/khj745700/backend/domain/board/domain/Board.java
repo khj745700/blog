@@ -48,4 +48,8 @@ public class Board {
         this.isHidden = request.getIsHidden();
         this.thumbnail = image;
     }
+
+    public void enroll(LocalDateTime localDateTime) {
+        this.wroteDate = localDateTime;
+    }
 }

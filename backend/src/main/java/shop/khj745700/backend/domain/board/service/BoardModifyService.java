@@ -9,6 +9,8 @@ import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
 import shop.khj745700.backend.domain.file.domain.dao.ImageFinder;
 import shop.khj745700.backend.domain.image.domain.Image;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @Service
 public class BoardModifyService {
@@ -23,6 +25,12 @@ public class BoardModifyService {
             read = imageFinder.read(request.getThumbnailId());
         }
         board.updateBoard(request, read);
+        boardSaver.boardUpdate(board);
+    }
+
+    public void tempBoardToBoard(Integer boardId, LocalDateTime now) {
+        Board board = boardFinder.surelyFindById(boardId);
+        board.enroll(now);
         boardSaver.boardUpdate(board);
     }
 }
