@@ -1,4 +1,4 @@
-package shop.khj745700.backend.domain.board.service.dto;
+package shop.khj745700.backend.domain.board.rest.dto;
 
 import lombok.*;
 import shop.khj745700.backend.domain.board.domain.Board;
