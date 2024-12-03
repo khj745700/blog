@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.khj745700.backend.domain.board.rest.dto.BoardIdView;
+import shop.khj745700.backend.domain.board.service.BoardFindService;
 import shop.khj745700.backend.domain.board.service.BoardModifyService;
 import shop.khj745700.backend.domain.board.service.BoardTempGenerateService;
 import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
+import shop.khj745700.backend.domain.board.service.dto.BoardView;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 public class BoardRestController {
     private final BoardTempGenerateService boardTempGenerateService;
     private final BoardModifyService boardModifyService;
+    private final BoardFindService boardFindService;
 
     @PostMapping("/create")
     public ResponseEntity<BoardIdView> createBoard() {
@@ -37,4 +40,9 @@ public class BoardRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardView> getBoard(@PathVariable Integer boardId) {
+        BoardView byId = boardFindService.findById(boardId);
+        return ResponseEntity.ok(byId);
+    }
 }
