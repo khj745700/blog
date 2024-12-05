@@ -7,10 +7,9 @@ const button = ref(null);
 const createRipple = (event) => {
   const buttonElement = button.value;
 
-  // 기존 Ripple 제거
-  const existingRipple = buttonElement.querySelector(".ripple");
-  if (existingRipple) {
-    existingRipple.remove();
+  const rippleExists = buttonElement.querySelector(".ripple");
+  if(rippleExists) {
+    rippleExists.remove();
   }
 
   const rect = buttonElement.getBoundingClientRect();
@@ -31,7 +30,8 @@ const createRipple = (event) => {
   // Ripple 애니메이션이 끝난 뒤 제거
   setTimeout(() => {
     ripple.remove();
-  }, 60000);
+  }, 600);
+
 };
 </script>
 
@@ -50,7 +50,6 @@ const createRipple = (event) => {
   padding: 10px 20px;
   font-size: 20px;
 
-  background-color: inherit;
   border: 1px solid black;
   width: 100%;
 
@@ -62,8 +61,28 @@ const createRipple = (event) => {
   color: white;
   mix-blend-mode: difference;
 
+  background-image: linear-gradient(45deg, #000, #fff,  #fff, #000);
+  background-size: 400% 400%;
+  animation: backgroundColorChange 4s ease infinite;
+  transition: background-image 1s ease;
+
+  &:hover {
+    background: none;
+    animation: none;
+  }
 }
 
+@keyframes backgroundColorChange {
+  0% {
+    background-position: 0 0;
+  }
+  90% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 
+}
 
 </style>
