@@ -1,0 +1,23 @@
+
+@font-face {
+  font-family: 'ptd';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: black;
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+
+/* Ripple 애니메이션 */
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
