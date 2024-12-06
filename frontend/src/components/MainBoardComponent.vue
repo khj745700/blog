@@ -1,29 +1,65 @@
 <script setup>
 
-const props = defineProps({
-  title: String,
-  date: String,
-  hashtags: Array,
-})
+const boards = [
+  {
+    id: 1,
+    title: "안녕하세요, 게시판입니다.",
+    date: "2024-09-24",
+    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
+  },
+  {
+    id: 2,
+    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
+    date: "2024-09-24",
+    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
+  },
+  {
+    id: 3,
+    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
+    date: "2024-09-24",
+    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
+  },
+  {
+    id: 4,
+    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
+    date: "2024-09-24",
+    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
+  },
+];
+
+
 </script>
 
 <template>
-  <div class="componentContainer">
-    <div class="dummyImage"></div>
-    <div class="componentBody">
-      <p class="componentDate">{{date}}</p>
-      <p class="componentTitle">{{title}}</p>
+  <div class="boardContainer">
+    <div class="componentContainer" v-for="board in boards" key="board.id">
+      <div class="dummyImage"></div>
+      <div class="componentBody">
+        <p class="componentDate">{{board.date}}</p>
+        <p class="componentTitle">{{board.title}}</p>
 
-      <div class="hashTagContainer">
-          <span class="hashTags" v-for="hashtag in hashtags" key="hashtag">
+        <div class="hashTagContainer">
+          <span class="hashTags" v-for="hashtag in board.hashTags" key="hashtag">
           #{{hashtag}}
         </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.boardContainer {
+  display: flex;
+  width: calc(54rem + 60px);
+
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
 
 .componentContainer {
   width: 27rem;
@@ -35,24 +71,9 @@ const props = defineProps({
   transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   &:hover {
     transform : translate(-5px, -5px);
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px dimgrey;
   }
 
-  &:hover:after {
-    content: '보러가기';
-    position: absolute;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    width: calc(100% - 2rem);
-    height: calc(100% - 2rem);
-    padding: 1rem 1rem;
-    font-family: 'ptd';
-    font-weight: 600;
-    color: black;
-    mix-blend-mode: difference;
-    background-color: rgba(50,50,50, 0.1);
-  }
 
 }
 
@@ -60,7 +81,6 @@ const props = defineProps({
   width: 100%;
   height: 15rem;
   background-color: lightgray;
-
 }
 
 .componentTitle {
@@ -88,7 +108,6 @@ const props = defineProps({
 }
 
 .hashTagContainer {
-
   align-self: flex-end;
 }
 

@@ -2,52 +2,47 @@
 import PageContainer from "@/atomic/PageContainer.vue";
 import MainBoardComponent from "@/components/MainBoardComponent.vue";
 import MainProfileComponent from "@/components/MainProfileComponent.vue";
+import MainHashTagListComponent from "@/components/MainHashTagListComponent.vue";
 
-const boards = [
-  {
-    id: 1,
-    title: "안녕하세요, 게시판입니다.",
-    date: "2024-09-24",
-    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
-  },
-  {
-    id: 2,
-    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
-    date: "2024-09-24",
-    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
-  },
-  {
-    id: 3,
-    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
-    date: "2024-09-24",
-    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
-  },
-  {
-    id: 4,
-    title: "안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다. 안녕하세요, 게시판입니다.",
-    date: "2024-09-24",
-    hashTags: ["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]
-  },
-];
+
 </script>
 
 <template>
 <PageContainer >
   <MainProfileComponent />
-  <div class="boardContainer">
-    <MainBoardComponent v-for="board in boards" key="board.id" :title="board.title" :date="board.date" :hashtags="board.hashTags"/>
-  </div>
+  <div class="bodyContainer">
+    <MainBoardComponent />
+    <div class="hashTagContainer">
+      <div class="hashTagTitle">TagList</div>
+      <div class="borderBottom"></div>
+      <MainHashTagListComponent style="align-self: flex-start"/>
+    </div>
+    </div>
 </PageContainer>
 </template>
 
 <style scoped>
-  .boardContainer {
+  .bodyContainer {
     display: flex;
-    width: 60%;
-    height: 100%;
-    flex-wrap: wrap;
-    gap: 30px;
-
     justify-content: center;
+    height: 100%;
+  }
+
+  .hashTagContainer {
+    display: flex;
+    flex-direction: column;
+    color: darkgoldenrod;
+    gap : 20px;
+
+  }
+
+  .hashTagTitle {
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+
+  .borderBottom {
+    border-bottom: 1px solid darkgoldenrod;
+
   }
 </style>

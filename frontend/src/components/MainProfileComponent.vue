@@ -28,7 +28,7 @@ const setCurrentColor = (value) => {
 
 <style scoped>
   .componentContainer {
-    width: 40%;
+    width: 64%;
     height: 10rem;
     border-bottom: 1px solid darkgoldenrod;
     margin-bottom: 30px;
