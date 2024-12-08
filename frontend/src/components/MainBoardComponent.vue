@@ -1,5 +1,7 @@
 <script setup>
 
+import HashTagListComponent from "@/components/HashTagListComponent.vue";
+
 const boards = [
   {
     id: 1,
@@ -38,11 +40,7 @@ const boards = [
         <p class="componentDate">{{board.date}}</p>
         <p class="componentTitle">{{board.title}}</p>
 
-        <div class="hashTagContainer">
-          <span class="hashTags" v-for="hashtag in board.hashTags" key="hashtag">
-          #{{hashtag}}
-        </span>
-        </div>
+        <HashTagListComponent :hash-tags="board.hashTags"/>
       </div>
     </div>
   </div>
@@ -111,21 +109,5 @@ const boards = [
   align-self: flex-end;
 }
 
-.hashTags {
-  border: 1px solid darkgoldenrod;
-  border-radius: 8px;
-  color: darkgoldenrod;
-  display: inline-block;
-  margin-right: 1rem;
-  padding: 2px 5px;
-  margin-bottom: 10px;
-  font-weight: 400;
-  font-size: 0.9rem;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease;
 
-  &:hover {
-    background-color: darkgoldenrod;
-    color: white;
-  }
-}
 </style>
