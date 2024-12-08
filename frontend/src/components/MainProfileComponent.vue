@@ -39,8 +39,8 @@ const setCurrentColor = (value) => {
   }
 
   .profileImage {
-    width: 7rem;
-    height: 7rem;
+    width: 8rem;
+    height: 8rem;
     border: 1px solid black;
     border-radius: 25%;
   }

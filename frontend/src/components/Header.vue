@@ -7,7 +7,7 @@ let lastScrollPosition = 0;
 
 const handleScroll = () => {
   const currentScrollPosition = window.scrollY;
-  console.log(currentScrollPosition);
+
   if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
     
     showHeader.value = false;

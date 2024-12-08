@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "@/pages/LoginView.vue";
 import MainView from "@/pages/MainView.vue";
 import ComponentView from "@/pages/ComponentView.vue";
+import BoardView from "@/pages/BoardView.vue";
+import BoardEditView from "@/pages/BoardEditView.vue";
 
 
 const router = createRouter({
@@ -18,10 +20,20 @@ const router = createRouter({
             component: LoginView,
         },
         {
+          path: "/board",
+          name: "board",
+          component: BoardView,
+        },
+        {
             path: "/component",
             name: "component",
             component: ComponentView,
         },
+        {
+            path: "/post",
+            name: "post",
+            component: BoardEditView,
+        }
     ]
 })
 
