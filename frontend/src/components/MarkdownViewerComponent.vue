@@ -5,14 +5,20 @@
   import { markedHighlight } from "marked-highlight";
   import hljs from 'highlight.js';
   import 'highlight.js/styles/github-dark.css';
+  import 'vue3-markdown/dist/style.css'
 
   const markdown = ref(`
   # 한국어
+
   ## 한국어1
   ## Subheading 1.2
   ### Subheading 1.2.1
   # Heading 2
   ## Subheading 2.1
+
+  > # this is h1!
+  > * list
+  > \`textbox\`
 `);
   const markdownHtml = ref('');
   const toc = ref([]);
@@ -49,7 +55,7 @@
     //     }
     // };
 
-    const output = marked(markdown.value, {renderer });
+    const output = marked(markdown.value, {renderer, gfm: true});
     return output;
   });
 
@@ -61,7 +67,6 @@
   onMounted(async () => {
     // const path = 'https://raw.githubusercontent.com/khj745700/khj745700/refs/heads/main/README.md';
     // await getMarkdown(path);
-    console.log(markdown.value);
 
     markdownHtml.value = await markdownToHtml();
 
@@ -75,8 +80,6 @@
     for (const li of ul.querySelectorAll('li')) {
 
       li.addEventListener('click', () => {
-        console.log(document.querySelector(li.dataset.target));
-        console.log(li.dataset.target);
         const scrollPosition = document.querySelector(li.dataset.target).offsetTop - 150;
 
         window.scrollTo({top: scrollPosition+10, behavior: 'smooth'});
@@ -92,7 +95,6 @@
   const handleScroll = () => {
 
     let activeSection = beforeSection;
-
 
     for(let i = 0 ; i < toc.value.length; i++) {
       const element = document.getElementById(toc.value[i].slug);
@@ -126,7 +128,7 @@
 <template>
   <div style="width:100%; display: flex">
     <div class="markdownContainer">
-      <div class="custom"  v-html="markdownHtml"></div>
+      <section class="markdown-body custom" data-theme="light" v-html="markdownHtml"></section>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -145,7 +147,6 @@
 
 <style scoped>
 .markdownContainer {
-
   width: 100%; /* 부모 컨테이너에 딱 맞추기 */
   box-sizing: border-box; /* 패딩 포함해 전체 크기 조정 */
 }
@@ -167,8 +168,12 @@
 .custom :deep(img) {
   max-width: 100%; /* 이미지가 컨테이너를 넘지 않도록 설정 */
   height: auto; /* 비율을 유지하면서 높이를 조정 */
-
 }
+
+.custom :deep(h2:after) {
+  display: none;
+}
+
 
 ul {
   list-style-type: none;

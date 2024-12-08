@@ -10,9 +10,6 @@ import HashTagListComponent from "@/components/HashTagListComponent.vue";
 const title = ref('안녕하세요, 개발자 김현진입니다.');
 const date = ref('2024-09-25');
 
-
-
-
 const hashTags = ref(["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]);
 </script>
 
