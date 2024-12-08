@@ -2,7 +2,7 @@ package shop.khj745700.backend.domain.hashtag.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+
 @Table(name = "hashtag")
 @Entity
 public class HashTag {
@@ -22,6 +22,10 @@ public class HashTag {
     @Column(name = "hashtag_name")
     private String name;
 
+    @Builder
+    public HashTag(String name) {
+        this.name = name.toLowerCase();
+    }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<HashTagList> hashTagList;
