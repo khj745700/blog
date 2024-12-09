@@ -21,4 +21,7 @@ public interface HashTagRepository extends JpaRepository<HashTag, Integer> {
                 "LEFT JOIN Board b ON htl.board.id = b.id " +
             "GROUP BY ht HAVING COUNT(b.id) > 0 ORDER BY ht.name ASC ")
     List<HashTagCountView> findAllCounts();
+
+
+    List<HashTag> findAllByHashTagList_Board_Id(Integer boardId);
 }

@@ -53,4 +53,10 @@ public class BoardRestController {
         Slice<BoardView> all = boardFindService.findAll(pageable);
         return ResponseEntity.ok(all);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Slice<BoardView>> searchBoard(Pageable pageable, @RequestParam Integer hashTagId) {
+        Slice<BoardView> byHashTagId = boardFindService.findByHashTagId(hashTagId, pageable);
+        return ResponseEntity.ok(byHashTagId);
+    }
 }
