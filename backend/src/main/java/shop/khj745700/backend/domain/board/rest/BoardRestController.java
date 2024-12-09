@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/boards")
 @RestController
 public class BoardRestController {
     private final BoardTempGenerateService boardTempGenerateService;
     private final BoardModifyService boardModifyService;
     private final BoardFindService boardFindService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<BoardIdView> createBoard() {
         Integer id = boardTempGenerateService.boardGenerate();
         BoardIdView boardIdView = new BoardIdView(id);
