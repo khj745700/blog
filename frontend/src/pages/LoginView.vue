@@ -5,9 +5,16 @@ import PageContainer from "@/atomic/PageContainer.vue";
 import RippleButton from "@/atomic/RippleButton.vue";
 import loginRequest from "@/api/user/Login.js";
 import {ref} from "vue";
+import {showToast} from "@/utils/toast.js";
+
+
 
 const loginClick = () => {
-  loginRequest(username.value, password.value, () => {}, () => {});
+  loginRequest(username.value, password.value, () => {
+    showToast("로그인 성공!", "success");
+  }, (err) => {
+    showToast('로그인 실패!', "error");
+  });
 }
 
 const username = ref('');
@@ -28,7 +35,7 @@ const passwordHandler = (event) => {
   <PageContainer>
     <div class="container">
       <LoginTextBox label="ID" input-type="text" :value="username" :value-handler="usernameHandler" />
-      <LoginTextBox label="password" input-type="password" :value="username" :value-handler="passwordHandler"/>
+      <LoginTextBox label="password" input-type="password" :value="password" :value-handler="passwordHandler"/>
       <RippleButton @click="loginClick">Login</RippleButton>
     </div>
   </PageContainer>
