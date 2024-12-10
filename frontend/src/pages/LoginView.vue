@@ -3,14 +3,40 @@
 import LoginTextBox from "@/components/LoginTextBox.vue";
 import PageContainer from "@/atomic/PageContainer.vue";
 import RippleButton from "@/atomic/RippleButton.vue";
+import loginRequest from "@/api/user/Login.js";
+import {ref} from "vue";
+import {showToast} from "@/utils/toast.js";
+
+
+
+const loginClick = () => {
+  loginRequest(username.value, password.value, () => {
+    showToast("로그인 성공!", "success");
+  }, (err) => {
+    showToast('로그인 실패!', "error");
+  });
+}
+
+const username = ref('');
+const password = ref('');
+
+const usernameHandler = (event) => {
+  username.value = event.target.value;
+  console.log(username.value);
+}
+
+const passwordHandler = (event) => {
+  password.value = event.target.value;
+}
+
 </script>
 
 <template>
   <PageContainer>
     <div class="container">
-      <LoginTextBox label="ID" input-type="text"/>
-      <LoginTextBox label="password" input-type="password"/>
-      <RippleButton>Login</RippleButton>
+      <LoginTextBox label="ID" input-type="text" :value="username" :value-handler="usernameHandler" />
+      <LoginTextBox label="password" input-type="password" :value="password" :value-handler="passwordHandler"/>
+      <RippleButton @click="loginClick">Login</RippleButton>
     </div>
   </PageContainer>
 </template>
