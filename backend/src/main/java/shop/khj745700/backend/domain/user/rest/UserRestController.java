@@ -20,6 +20,11 @@ public class UserRestController {
     private final UserModifyService userModifyService;
     private final UserFindService userFindService;
 
+    @GetMapping("/check")
+    public ResponseEntity<Void> sessionCheck() {
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout() {
         logoutService.logout();
