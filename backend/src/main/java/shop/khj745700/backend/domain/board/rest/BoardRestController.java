@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/boards")
 @RestController
 public class BoardRestController {
     private final BoardTempGenerateService boardTempGenerateService;
     private final BoardModifyService boardModifyService;
     private final BoardFindService boardFindService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<BoardIdView> createBoard() {
         Integer id = boardTempGenerateService.boardGenerate();
         BoardIdView boardIdView = new BoardIdView(id);
@@ -52,5 +52,11 @@ public class BoardRestController {
     public ResponseEntity<Slice<BoardView>> getAllBoards(Pageable pageable) {
         Slice<BoardView> all = boardFindService.findAll(pageable);
         return ResponseEntity.ok(all);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Slice<BoardView>> searchBoard(Pageable pageable, @RequestParam Integer hashTagId) {
+        Slice<BoardView> byHashTagId = boardFindService.findByHashTagId(hashTagId, pageable);
+        return ResponseEntity.ok(byHashTagId);
     }
 }
