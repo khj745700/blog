@@ -12,12 +12,12 @@ public class UserDto {
     private Integer id;
     private String description;
     private String nickname;
-    private Integer imageId;
+    private String imageUrl;
 
     public UserDto(User user) {
         this.id = user.getId();
         this.description = user.getDescription();
         this.nickname = user.getNickname();
-        this.imageId = user.getImage().getId();
+        this.imageUrl = user.getImageUrl();
     }
 }

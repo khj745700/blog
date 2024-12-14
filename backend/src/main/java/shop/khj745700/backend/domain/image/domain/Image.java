@@ -2,12 +2,11 @@ package shop.khj745700.backend.domain.image.domain;
 
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @Table(name = "image")
 @Entity
 public class Image {
@@ -16,14 +15,11 @@ public class Image {
     @Column(name = "image_id")
     private Integer id;
 
-    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CompressedImage> sizes = new ArrayList<>();
+    @Column(name = "path")
+    private String path;
 
-    public Image() {
-        this.sizes = new ArrayList<>();
+    public Image(String path) {
+        this.path = path;
     }
 
-    public void addImage(CompressedImage image) {
-        sizes.add(image);
-    }
 }

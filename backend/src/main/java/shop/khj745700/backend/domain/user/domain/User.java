@@ -2,7 +2,6 @@ package shop.khj745700.backend.domain.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import shop.khj745700.backend.domain.image.domain.Image;
 import shop.khj745700.backend.domain.user.domain.password.Password;
 import shop.khj745700.backend.domain.user.domain.password.PasswordConverter;
 
@@ -31,14 +30,13 @@ public class User {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private Image image;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
     }
-    public void updateImage(Image image) {
-        this.image = image;
+    public void updateImage(String image) {
+        this.imageUrl = image;
     }
 }

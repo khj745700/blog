@@ -1,5 +1,6 @@
 package shop.khj745700.backend.domain.image.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import marvin.image.MarvinImage;
 import org.marvinproject.image.transform.scale.Scale;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+@Slf4j
 @Component
 public class ImageCompressor {
 
@@ -44,10 +47,13 @@ public class ImageCompressor {
         if(originWidth > imageSize.getWidth()) {
             scale.setAttribute("newWidth", imageSize.getWidth());
             scale.setAttribute("newHeight", originHeight * (1 - (originWidth / imageSize.getWidth())));
+
         }else {
             scale.setAttribute("newWidth", originWidth * (1 - (originHeight / imageSize.getHeight())));
             scale.setAttribute("newHeight", imageSize.getHeight());
         }
+        log.info("new Scale : {}", Arrays.toString(scale.getAttributes().toStringArray()));
+        log.info("Scale : {}", image.getHeight() + "x" + image.getWidth());
     }
 
     private boolean canResizeable(ImageSize imageSize, BufferedImage image) {

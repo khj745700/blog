@@ -108,7 +108,7 @@ public class SecurityConfig {
         });
 
         http.authorizeHttpRequests(
-                (auth) -> auth.requestMatchers("/", "/auth/**", "/health-check", "/board/**", "/comment/**").permitAll()
+                (auth) -> auth.requestMatchers("/", "/auth/**", "/health-check", "/board/**", "/comment/**" , "/resources/**").permitAll()
                         .anyRequest().authenticated());
         http.addFilterAt(jsonLoginAuthenticationFilter(authenticationManager),
                 UsernamePasswordAuthenticationFilter.class);

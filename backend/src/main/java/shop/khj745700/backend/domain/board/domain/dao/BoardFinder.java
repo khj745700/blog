@@ -9,16 +9,11 @@ import shop.khj745700.backend.domain.board.domain.Board;
 import shop.khj745700.backend.domain.board.domain.BoardRepository;
 import shop.khj745700.backend.domain.board.exception.BoardNotFoundException;
 import shop.khj745700.backend.domain.board.rest.dto.BoardView;
-import shop.khj745700.backend.domain.hashtag.domain.HashTag;
-import shop.khj745700.backend.domain.hashtag.domain.HashTagRepository;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
 public class BoardFinder {
     private final BoardRepository boardRepository;
-    private final HashTagRepository hashTagRepository;
 
     @Transactional(readOnly = true)
     public Board surelyFindById(Integer id) {
@@ -28,7 +23,6 @@ public class BoardFinder {
     @Transactional(readOnly = true)
     public BoardView surelyFindBoardViewById(Integer id) {
         Board board = surelyFindById(id);
-        List<HashTag> allByHashTagListBoardId = hashTagRepository.findAllByHashTagList_Board_Id(id);
         return new BoardView(board);
     }
 
