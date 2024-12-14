@@ -36,8 +36,16 @@ const hashtagComputed = computed(() => {
 
 <template>
   <PageContainer>
-    <div class="titleBody">
-      <InputBox  input-type="text" placeholder="제목을 입력하세요"></InputBox>
+    <div class="titleContainer">
+      <div class="titleBody">
+        <InputBox  input-type="text" placeholder="제목을 입력하세요"></InputBox>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <input type="file" id="upload-thumbnail" hidden/>
+        <label for="upload-thumbnail">
+          <img src="@/assets/camera.png" />
+        </label>
+      </div>
     </div>
     <div class="editorBody">
       <VMarkdownEditor class="editor" v-model="text" :upload-action="handleUpload" locale="en"></VMarkdownEditor>
@@ -62,10 +70,19 @@ const hashtagComputed = computed(() => {
 
 <style scoped>
   .titleBody {
-    margin-top: 100px;
+
     border: 1px solid black;
     width: 70%;
 
+  }
+
+  .titleContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    margin-top: 100px;
   }
 
   .editorBody {

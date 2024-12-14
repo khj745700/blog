@@ -20,7 +20,7 @@ const router = createRouter({
             component: LoginView,
         },
         {
-          path: "/board",
+          path: "/board/:id",
           name: "board",
           component: BoardView,
         },
@@ -30,7 +30,7 @@ const router = createRouter({
             component: ComponentView,
         },
         {
-            path: "/post",
+            path: "/post/:id",
             name: "post",
             component: BoardEditView,
         }

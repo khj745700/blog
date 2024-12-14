@@ -82,7 +82,6 @@ const createRipple = (event) => {
   100% {
     background-position: 0 0;
   }
-
 }
 
 </style>
