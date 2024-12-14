@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +15,7 @@ import lombok.Setter;
 public class BoardModifyRequest {
     private String description;
     private String title;
-    private Integer thumbnailId;
+    private String thumbnailUrl;
     private Integer boardId;
+    private List<Integer> hashTagIds;
 }

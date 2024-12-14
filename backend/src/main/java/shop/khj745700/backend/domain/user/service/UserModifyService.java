@@ -4,13 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import shop.khj745700.backend.domain.file.domain.dao.ImageFinder;
+import shop.khj745700.backend.domain.image.domain.dao.ImageFinder;
 import shop.khj745700.backend.domain.image.domain.Image;
 import shop.khj745700.backend.domain.image.service.ImageUploadService;
 import shop.khj745700.backend.domain.user.domain.User;
 import shop.khj745700.backend.domain.user.domain.dao.UserFinder;
 import shop.khj745700.backend.domain.user.domain.dao.UserSaver;
 import shop.khj745700.backend.domain.user.rest.dto.NicknameModifyRequest;
+
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @Service
@@ -35,11 +37,10 @@ public class UserModifyService {
             return null;
         }
 
-        Integer imageId = imageUploadService.saveProfileImage(file);
-        Image imageReference = imageFinder.read(imageId);
-        user.updateImage(imageReference);
+        Image image = imageUploadService.saveImages(file, LocalDate.now());
+        user.updateImage(image.getPath());
         userSaver.save(user);
 
-        return imageId;
+        return image.getId();
     }
 }

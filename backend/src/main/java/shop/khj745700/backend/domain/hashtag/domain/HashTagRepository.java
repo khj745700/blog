@@ -23,5 +23,4 @@ public interface HashTagRepository extends JpaRepository<HashTag, Integer> {
     List<HashTagCountView> findAllCounts();
 
 
-    List<HashTag> findAllByHashTagList_Board_Id(Integer boardId);
 }

@@ -6,8 +6,8 @@ import shop.khj745700.backend.domain.board.domain.Board;
 import shop.khj745700.backend.domain.board.domain.dao.BoardFinder;
 import shop.khj745700.backend.domain.board.domain.dao.BoardSaver;
 import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
-import shop.khj745700.backend.domain.file.domain.dao.ImageFinder;
-import shop.khj745700.backend.domain.image.domain.Image;
+import shop.khj745700.backend.domain.hashtag.domain.dao.HashTagRemover;
+import shop.khj745700.backend.domain.hashtag.domain.dao.HashTagSaver;
 
 import java.time.LocalDateTime;
 
@@ -16,15 +16,14 @@ import java.time.LocalDateTime;
 public class BoardModifyService {
     private final BoardSaver boardSaver;
     private final BoardFinder boardFinder;
-    private final ImageFinder imageFinder;
+    private final HashTagRemover hashTagRemover;
+    private final HashTagSaver hashTagSaver;
 
     public void modifyBoard(BoardModifyRequest request) {
         Board board = boardFinder.surelyFindById(request.getBoardId());
-        Image read = null;
-        if(request.getThumbnailId() != null) {
-            read = imageFinder.read(request.getThumbnailId());
-        }
-        board.updateBoard(request, read);
+        hashTagRemover.relationship(board.getId());
+        board.updateBoard(request, board.getThumbnailUrl());
+        hashTagSaver.saveHashTagsByBoardId(request.getHashTagIds(), board);
         boardSaver.boardUpdate(board);
     }
 

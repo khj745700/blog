@@ -1,9 +1,10 @@
 package shop.khj745700.backend.domain.board.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import shop.khj745700.backend.domain.board.service.dto.BoardModifyRequest;
-import shop.khj745700.backend.domain.image.domain.Image;
 
 import java.time.LocalDateTime;
 
@@ -25,9 +26,8 @@ public class Board {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "thumbnail_id")
-    private Image thumbnail;
+    @Column(name = "thumbnailUrl")
+    private String thumbnailUrl;
 
     @Column(name = "wrote_date")
     private LocalDateTime wroteDate;
@@ -41,10 +41,10 @@ public class Board {
     }
 
 
-    public void updateBoard(BoardModifyRequest request, Image image) {
+    public void updateBoard(BoardModifyRequest request, String thumbnailUrl) {
         this.title = request.getTitle();
         this.description = request.getDescription();
-        this.thumbnail = image;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public void enroll(LocalDateTime localDateTime) {

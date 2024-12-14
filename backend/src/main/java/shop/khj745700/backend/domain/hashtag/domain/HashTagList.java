@@ -15,9 +15,10 @@ import shop.khj745700.backend.domain.board.domain.Board;
 @Entity
 public class HashTagList {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @MapsId
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hashtag_id")
     private HashTag hashTag;
@@ -25,4 +26,10 @@ public class HashTagList {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+
+    public HashTagList(HashTag hashTag, Board board) {
+        this.hashTag = hashTag;
+        this.board = board;
+    }
 }

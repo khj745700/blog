@@ -1,4 +1,4 @@
-package shop.khj745700.backend.domain.file.domain.dao;
+package shop.khj745700.backend.domain.image.domain.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,4 +15,5 @@ public class ImageFinder {
     public Image read(Integer id) {
         return imageRepository.getReferenceById(id);
     }
+
 }
