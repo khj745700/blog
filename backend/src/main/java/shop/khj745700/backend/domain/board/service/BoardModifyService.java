@@ -22,7 +22,7 @@ public class BoardModifyService {
     public void modifyBoard(BoardModifyRequest request) {
         Board board = boardFinder.surelyFindById(request.getBoardId());
         hashTagRemover.relationship(board.getId());
-        board.updateBoard(request, board.getThumbnailUrl());
+        board.updateBoard(request, request.getThumbnailUrl());
         hashTagSaver.saveHashTagsByBoardId(request.getHashTagIds(), board);
         boardSaver.boardUpdate(board);
     }
