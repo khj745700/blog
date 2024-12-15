@@ -1,11 +1,12 @@
 import axiosInstance from "@/api/index.js";
 
 
-const boardUpdater = (description, title, thumbnailId, boardId, success, fail) => {
+const boardUpdater = async (description, title, thumbnailUrl, boardId, hashTagIds) => {
     const body = {
-        description, thumbnailId, title, boardId
+        description, thumbnailUrl, title, boardId, hashTagIds
     }
-    axiosInstance.put("/boards/update", body).then(success).catch(fail);
+    console.log(body);
+    return await axiosInstance.put("/boards/update", body);
 }
 
 

@@ -13,6 +13,8 @@ import {useRoute, useRouter} from "vue-router";
 import {showToast} from "@/utils/toast.js";
 import getHashTagListForEnroll from "@/api/hashtag/FindHashTag.js";
 import enrollHashTag from "@/api/hashtag/EnrollHashTag.js";
+import boardUpdater from "@/api/board/BoardUpdate.js";
+import boardEnroll from "@/api/board/BoardEnroll.js";
 
 const handleUpload = async (file) => {
   console.log(file)
@@ -25,10 +27,7 @@ const handleUpload = async (file) => {
 const router = useRouter();
 const route = useRoute();
 
-const hashtags = ref([{
-  hashtag:'mysql',
-  hashtagId:1,
-}]);
+const hashtags = ref([]);
 
 const text = ref('');
 const title = ref('');
@@ -70,7 +69,6 @@ const hashtag = ref('');
 const hashTagListForEnroll = ref([]);
 
 const hashtagBoxHandler = async (event) => {
-  hashtag.value = event.target.value;
   if(event.keyCode == 13) {
     // 엔터 입력했을 때
     if(hashtag.value == undefined || hashtag.value === '') {
@@ -91,8 +89,34 @@ const hashtagBoxHandler = async (event) => {
     return;
   }
 
+
+}
+
+const hashtagInput = async (event) => {
+  hashtag.value = event.target.value;
+
   await getHashTagListForEnroll(hashtag.value).then(res => {
     hashTagListForEnroll.value = res.data;
+  });
+}
+
+const boardUpdateAction = async () => {
+  const hashTagIds = hashtags.value.map(hashtag => hashtag.hashtagId);
+  return boardUpdater(text.value, title.value, thumbnail.value, route.params.id, hashTagIds);
+}
+
+const boardEnrollAction = async () => {
+  return boardEnroll(route.params.id);
+}
+
+const boardAndEnrollAction = async () => {
+  boardUpdateAction().then(() => {
+    boardEnroll()
+        .then(() => router.push('/'))
+        .catch((err) => showToast(`게시글 등록에 실패했습니다. errorCode : ${err.status}`));
+  }).catch((err) => {
+    console.log(err);
+    showToast(`게시글 저장에 실패했습니다. errorCode : ${err}`);
   });
 }
 
@@ -121,14 +145,15 @@ const hashtagBoxHandler = async (event) => {
             <input :type="text"
                    :value="hashtag"
                    @keyup="hashtagBoxHandler"
+                   @input="hashtagInput"
             />
             <HashTagListComponent :hash-tags="hashTagListForEnroll"></HashTagListComponent>
           </div>
           <HashTagListComponent :hash-tags="hashtags" :hash-tag-click-event="hashtagClickEvent"></HashTagListComponent>
         </div>
         <div style="display: flex; gap: 10px">
-          <div class="button">임시 저장하기</div>
-          <div class="button">저장하기</div>
+          <div class="button" @click="boardUpdateAction">임시 저장하기</div>
+          <div class="button" @click="boardAndEnrollAction">저장하기</div>
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import axiosInstance from "@/api/index.js";
 
 
-const boardEnroll = (boardId, success, fail) => {
+const boardEnroll = async (boardId) => {
     const body = {
         boardId
     }
-    axiosInstance.put("/boards/enroll", body).then(success).catch(fail);
+    return await axiosInstance.put("/boards/enroll", body);
 }
 
 
