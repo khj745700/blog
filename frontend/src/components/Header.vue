@@ -30,7 +30,7 @@ onUnmounted(() => {
   <div class="header" :class="{'hidden': !showHeader}">
     <div class="header__inner">
       <div class="logoWrap">
-      <div class="header__logo">Kim Hyunjin</div>
+      <div class="header__logo" @click="$router.push('/')">Kim Hyunjin</div>
       <div class="logo_inner">
       </div>
     </div>
