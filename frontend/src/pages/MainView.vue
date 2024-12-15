@@ -36,8 +36,6 @@ const boardEnrollButtonClick = () => {
   <div class="bodyContainer">
     <MainBoardComponent />
     <div class="hashTagContainer">
-      <div class="hashTagTitle">TagList</div>
-      <div class="borderBottom"></div>
       <MainHashTagListComponent style="align-self: flex-start"/>
     </div>
     </div>
@@ -57,16 +55,6 @@ const boardEnrollButtonClick = () => {
     flex-direction: column;
     color: darkgoldenrod;
     gap : 20px;
-
-  }
-
-  .hashTagTitle {
-    font-size: 1.5rem;
-    font-weight: bolder;
-  }
-
-  .borderBottom {
-    border-bottom: 1px solid darkgoldenrod;
 
   }
 

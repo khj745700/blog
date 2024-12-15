@@ -38,7 +38,6 @@ onBeforeMount(() => {
     <MarkdownViewerComponent class="markdownContainer"/>
   </div>
 </PageContainer>
-'
 </template>
 
 

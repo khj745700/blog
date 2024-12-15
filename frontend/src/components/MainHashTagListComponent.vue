@@ -8,7 +8,7 @@ const hashTags = ref([]);
 
 onBeforeMount(() => {
   getHashTagAll()
-      .then(res => console.log(res.data));
+      .then(res => hashTags.value = res.data);
 });
 
 //
@@ -38,8 +38,10 @@ onBeforeMount(() => {
 
 
 <template>
-  <div>
-      <div class="hashtag" v-for="hashTag in hashTags" :key="hashTag.id">{{hashTag.value}} ({{hashTag.count}})</div>
+  <div v-if="hashTags.length !== 0" class="hashTagContainer">
+    <div class="hashTagTitle">TagList</div>
+    <div class="borderBottom"></div>
+      <div class="hashtag" v-for="hashTag in hashTags" :key="hashTag.hashtagId">{{hashTag.hashtag}} ({{hashTag.count}})</div>
   </div>
 </template>
 
@@ -55,4 +57,23 @@ onBeforeMount(() => {
       text-decoration: underline;
     }
   }
+
+  .hashTagTitle {
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+
+  .hashTagContainer {
+    display: flex;
+    flex-direction: column;
+    color: darkgoldenrod;
+    gap : 20px;
+
+  }
+
+  .borderBottom {
+    border-bottom: 1px solid darkgoldenrod;
+
+  }
+
 </style>

@@ -11,7 +11,7 @@ import imageUploadRequest from "@/api/image/ImageUpload.js";
 import {getBoardDetails} from '@/api/board/FindBoard.js';
 import {useRoute, useRouter} from "vue-router";
 import {showToast} from "@/utils/toast.js";
-import getHashTagListForEnroll from "@/api/hashtag/FindHashTag.js";
+import {getHashTagListForEnroll} from "@/api/hashtag/FindHashTag.js";
 import enrollHashTag from "@/api/hashtag/EnrollHashTag.js";
 import boardUpdater from "@/api/board/BoardUpdate.js";
 import boardEnroll from "@/api/board/BoardEnroll.js";
