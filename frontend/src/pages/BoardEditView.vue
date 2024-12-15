@@ -4,9 +4,8 @@ import PageContainer from "@/atomic/PageContainer.vue";
 import {VMarkdownEditor} from "vue3-markdown";
 import 'vue3-markdown/dist/style.css'
 
-import {computed, onBeforeMount, ref} from 'vue';
+import {onBeforeMount, ref} from 'vue';
 import InputBox from "@/atomic/InputBox.vue";
-import RippleButton from "@/atomic/RippleButton.vue";
 import HashTagListComponent from "@/components/HashTagListComponent.vue";
 import imageUploadRequest from "@/api/image/ImageUpload.js";
 import {getBoardDetails} from '@/api/board/FindBoard.js';
@@ -69,29 +68,31 @@ const hashtagClickEvent = (event) => {
 const hashtag = ref('');
 
 const hashTagListForEnroll = ref([]);
+
 const hashtagBoxHandler = async (event) => {
-  const hashtagVal = event.target.value;
+  hashtag.value = event.target.value;
   if(event.keyCode == 13) {
     // 엔터 입력했을 때
-    if(hashtagVal == undefined || hashtagVal === '') {
+    if(hashtag.value == undefined || hashtag.value === '') {
       return;
     }
 
     if(hashTagListForEnroll.value.length === 0) {
-      await enrollHashTag(hashtagVal).then(res => {
+      await enrollHashTag(hashtag.value).then(res => {
         const body = res.data;
         hashtags.value.push(body);
       });
     }else {
       hashtags.value.push(hashTagListForEnroll.value[0]);
+      hashTagListForEnroll.value = [];
     }
     hashtag.value = '';
+
     return;
   }
 
-  await getHashTagListForEnroll(hashtagVal).then(res => {
-    const body = res.data;
-    hashTagListForEnroll.value = body;
+  await getHashTagListForEnroll(hashtag.value).then(res => {
+    hashTagListForEnroll.value = res.data;
   });
 }
 
@@ -117,7 +118,11 @@ const hashtagBoxHandler = async (event) => {
       <div style="display: flex; gap : 10px; justify-content: space-between">
         <div style="align-self: flex-start; display: flex; gap : 10px; align-items: baseline">
           <div style="border: 1px solid black;">
-            <InputBox :value="hashtag" input-type="text" placeholder="해쉬태그를 입력하세요" @keyup="hashtagBoxHandler"></InputBox>
+            <input :type="text"
+                   :value="hashtag"
+                   @keyup="hashtagBoxHandler"
+            />
+            <HashTagListComponent :hash-tags="hashTagListForEnroll"></HashTagListComponent>
           </div>
           <HashTagListComponent :hash-tags="hashtags" :hash-tag-click-event="hashtagClickEvent"></HashTagListComponent>
         </div>
