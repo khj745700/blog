@@ -115,7 +115,7 @@ const boardEnrollAction = async () => {
 
 const boardAndEnrollAction = async () => {
   boardUpdateAction().then(() => {
-    boardEnroll()
+    boardEnrollAction()
         .then(() => router.push('/'))
         .catch((err) => showToast(`게시글 등록에 실패했습니다. errorCode : ${err.status}`));
   }).catch((err) => {
