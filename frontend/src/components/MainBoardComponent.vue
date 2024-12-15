@@ -65,7 +65,8 @@ const splitDate = (date) => date.split("T")[0];
   <div class="boardContainer">
     <div v-if="boards.length === 0">게시글이 없습니다.</div>
     <div class="componentContainer" v-for="board in boards" :key="board.id">
-      <div class="dummyImage"></div>
+      <div v-if="board.thumbnailUrl == null" class="dummyImage"></div>
+      <img :src="board.thumbnailUrl" height="15rem">
       <div class="componentBody">
         <p class="componentDate">{{ splitDate(board.wroteDate) }}</p>
         <p class="componentTitle">{{ board.title }}</p>
