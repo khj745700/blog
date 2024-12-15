@@ -13,7 +13,7 @@ public interface HashTagRepository extends JpaRepository<HashTag, Integer> {
     HashTag findByName(@Param("name") String name);
 
 //    @Query("SELECT ht FROM HashTag ht WHERE :name LIKE LOWER(CONCAT('%', ht.name, '%')) ")
-    List<HashTag> findByNameLikeIgnoreCase(@Param("name") String name);
+    List<HashTag> findByNameContainingIgnoreCase(@Param("name") String name);
 
     @Query("SELECT new shop.khj745700.backend.domain.hashtag.rest.dto.HashTagCountView(ht, COUNT(b.id)) " +
             "FROM HashTag ht " +

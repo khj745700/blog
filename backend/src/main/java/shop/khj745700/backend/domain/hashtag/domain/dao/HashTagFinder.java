@@ -30,7 +30,7 @@ public class HashTagFinder {
 
     @Transactional(readOnly = true)
     public List<HashTagView> findByNameLikeIgnore(String name) {
-        return hashTagRepository.findByNameLikeIgnoreCase(name).stream().map(HashTagView::new).collect(Collectors.toList());
+        return hashTagRepository.findByNameContainingIgnoreCase(name).stream().map(HashTagView::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
