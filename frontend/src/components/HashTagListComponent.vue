@@ -4,13 +4,17 @@ const props = defineProps({
   hashTags : {
     type: Array,
     default: []
+  },
+  hashTagClickEvent: {
+    type: Function,
+    default: () => {}
   }
 })
 </script>
 
 <template>
   <div class="hashTagContainer">
-    <span class="hashTags" v-for="hashtag in hashTags" key="hashtag">
+    <span class="hashTags" v-for="hashtag in hashTags" key="hashtag" @click="hashTagClickEvent">
             #{{hashtag}}
     </span>
   </div>
