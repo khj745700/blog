@@ -4,11 +4,16 @@ import PageContainer from "@/atomic/PageContainer.vue";
 import {VMarkdownEditor} from "vue3-markdown";
 import 'vue3-markdown/dist/style.css'
 
-import {computed, ref} from 'vue';
+import {computed, onBeforeMount, ref} from 'vue';
 import InputBox from "@/atomic/InputBox.vue";
 import RippleButton from "@/atomic/RippleButton.vue";
 import HashTagListComponent from "@/components/HashTagListComponent.vue";
 import imageUploadRequest from "@/api/image/ImageUpload.js";
+import {getBoardDetails} from '@/api/board/FindBoard.js';
+import {useRoute, useRouter} from "vue-router";
+import {showToast} from "@/utils/toast.js";
+import getHashTagListForEnroll from "@/api/hashtag/FindHashTag.js";
+import enrollHashTag from "@/api/hashtag/EnrollHashTag.js";
 
 const handleUpload = async (file) => {
   console.log(file)
@@ -18,46 +23,76 @@ const handleUpload = async (file) => {
   return path;
 }
 
-const hashtags = ref([
-  {
-    name: "MySQL",
-    hashTagId: 1,
-  },
-  {
-    name: "운영체제",
-    hashTagId: 2,
-  }
-]);
+const router = useRouter();
+const route = useRoute();
 
-const text = ref('# Hello Editor');
+const hashtags = ref([{
+  hashtag:'mysql',
+  hashtagId:1,
+}]);
 
-const hashtagComputed = computed(() => {
-  return hashtags.value.map(hashtag => hashtag.name);
-})
+const text = ref('');
+const title = ref('');
+const thumbnail = ref('');
 
 async function getFileName(files) {
   console.log(files);
-  const fileName = files[0];
-  imageUploadRequest(fileName, (res)=>console.log(res.headers['location']), err => console.error(err));
-  await uploadFile(fileName);
+  const file = files[0];
+  await imageUploadRequest(file, (res)=> {
+    thumbnail.value = res.headers['location'];
+  }), (err) => {showToast(err, 'error', {autoClose: false})};
+  await setThumbnail();
+}
+
+async function setThumbnail() {
+  // 비동기적으로 동작하기 위하여 promise를 return 해준다.
+    const previewImage = document.getElementById('preview');
+    previewImage.src = thumbnail.value;
 
 }
 
-function uploadFile(file) {
-  // 비동기적으로 동작하기 위하여 promise를 return 해준다.
-  return new Promise(resolve => {
-    // 업로드된 파일을 읽기 위한 FileReader() 객체 생성
-    let a = new FileReader()
-    // 읽기 동작이 성공적으로 완료됐을 때 발생
-    a.onload = e => {
-      resolve(e.target.result)
-      // 썸네일을 보여주고자 하는 <img>에 id값을 가져와 src에 결과값을 넣어준다.
-      const previewImage = document.getElementById('preview')
-      previewImage.src = e.target.result
+onBeforeMount(() => {
+  getBoardDetails(route.params.id)
+      .then(res => {
+        const body = res.data;
+        title.value = body.title;
+        thumbnail.value = body.thumbnailUrl;
+        // hashtags.value = body.hashTags;
+      });
+});
+
+const hashtagClickEvent = (event) => {
+  const target = event.target.dataset.id;
+  hashtags.value = hashtags.value.filter(hashtag => hashtag.hashtagId != target);
+}
+
+const hashtag = ref('');
+
+const hashTagListForEnroll = ref([]);
+const hashtagBoxHandler = async (event) => {
+  const hashtagVal = event.target.value;
+  if(event.keyCode == 13) {
+    // 엔터 입력했을 때
+    if(hashtagVal == undefined || hashtagVal === '') {
+      return;
     }
-    // file 데이터를 base64로 인코딩한 문자열. 이 문자열을 브라우저가 인식하여 원래 데이터로 만들어준다.
-    a.readAsDataURL(file)
-  })
+
+    if(hashTagListForEnroll.value.length === 0) {
+      await enrollHashTag(hashtagVal).then(res => {
+        const body = res.data;
+        hashtags.value.push(body);
+      });
+    }else {
+      hashtags.value.push(hashTagListForEnroll.value[0]);
+    }
+    hashtag.value = '';
+    return;
+  }
+
+  await getHashTagListForEnroll(hashtagVal).then(res => {
+    const body = res.data;
+    hashTagListForEnroll.value = body;
+  });
 }
 
 </script>
@@ -82,9 +117,9 @@ function uploadFile(file) {
       <div style="display: flex; gap : 10px; justify-content: space-between">
         <div style="align-self: flex-start; display: flex; gap : 10px; align-items: baseline">
           <div style="border: 1px solid black;">
-            <InputBox  input-type="text" placeholder="해쉬태그를 입력하세요"></InputBox>
+            <InputBox :value="hashtag" input-type="text" placeholder="해쉬태그를 입력하세요" @keyup="hashtagBoxHandler"></InputBox>
           </div>
-          <HashTagListComponent :hash-tags="hashtagComputed"></HashTagListComponent>
+          <HashTagListComponent :hash-tags="hashtags" :hash-tag-click-event="hashtagClickEvent"></HashTagListComponent>
         </div>
         <div style="display: flex; gap: 10px">
           <div class="button">임시 저장하기</div>

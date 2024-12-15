@@ -1,9 +1,9 @@
 import axiosInstance from "@/api/index.js";
 
 
-const getBoardDetails = (boardId, success, fail) => {
+const getBoardDetails = async (boardId) => {
 
-    axiosInstance.get(`/boards/${boardId}`).then(success).catch(fail);
+    return await axiosInstance.get(`/boards/${boardId}`);
 }
 
 const getBoardPaging = (page, size, success, fail) => {
@@ -15,4 +15,4 @@ const getBoardsByHashTag = (page, size, hashTagId, success, fail) => {
 }
 
 
-export default {getBoardDetails, getBoardPaging, getBoardsByHashTag};
+export {getBoardDetails, getBoardPaging, getBoardsByHashTag};

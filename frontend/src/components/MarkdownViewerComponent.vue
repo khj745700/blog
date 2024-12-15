@@ -7,19 +7,7 @@
   import 'highlight.js/styles/github-dark.css';
   import 'vue3-markdown/dist/style.css'
 
-  const markdown = ref(`
-  # 한국어
-
-  ## 한국어1
-  ## Subheading 1.2
-  ### Subheading 1.2.1
-  # Heading 2
-  ## Subheading 2.1
-
-  > # this is h1!
-  > * list
-  > \`textbox\`
-`);
+  const markdown = ref(``);
   const markdownHtml = ref('');
   const toc = ref([]);
 
@@ -163,6 +151,22 @@
   color: #c7254e;
   background-color: #f9f2f4;
   border-radius: 4px;
+}
+
+.custom :deep(h1) {
+  color: #666666;
+}
+
+.custom :deep(h2) {
+  color: #666666;
+}
+
+.custom :deep(h3) {
+  color: #666666;
+}
+
+.custom :deep(h4) {
+  color: #666666;
 }
 
 .custom :deep(img) {

@@ -1,16 +1,27 @@
 <script setup>
 
 import PageContainer from "@/atomic/PageContainer.vue";
-import {computed, ref} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 import MarkdownViewerComponent from "@/components/MarkdownViewerComponent.vue";
 import HashTagListComponent from "@/components/HashTagListComponent.vue";
+import getProfile from "@/api/user/Profile.js";
 
 
+const nickname = ref('');
 
 const title = ref('안녕하세요, 개발자 김현진입니다.');
 const date = ref('2024-09-25');
 
-const hashTags = ref(["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "Spring Boot", "Linux"]);
+const hashTags = ref([{
+  hashtag:"mysql",
+  hashtagId:1,
+}]);
+
+onBeforeMount(() => {
+  getProfile().then((res) => {
+    nickname.value = res.data.nickname;
+  })
+});
 </script>
 
 
@@ -20,14 +31,14 @@ const hashTags = ref(["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "
     <div class="title">{{title}}</div>
     <div class="semiProfileContainer">
       <div style="display: flex; gap: 1rem;">
-        <p style="color: darkgoldenrod; font-weight: bolder; font-size: 1.1rem">@KimHyunJin</p> <p class="date">{{date}}</p>
+        <p style="color: darkgoldenrod; font-weight: bolder; font-size: 1.1rem">@{{nickname}}</p> <p class="date">{{date}}</p>
       </div>
       <HashTagListComponent :hash-tags="hashTags"/>
     </div>
-    <MarkdownViewerComponent/>
+    <MarkdownViewerComponent class="markdownContainer"/>
   </div>
 </PageContainer>
-
+'
 </template>
 
 
@@ -64,5 +75,9 @@ const hashTags = ref(["MySQL", "Redis", "Spring Data Jpa", "Spring Framework", "
     border-bottom: 1px solid darkgoldenrod;
     flex-direction: column;
     padding-bottom: 15px;
+  }
+
+  .markdownContainer {
+    padding: 5rem 1rem;
   }
 </style>
