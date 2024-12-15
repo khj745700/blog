@@ -16,5 +16,6 @@ public class HashTagCountView {
     public HashTagCountView(HashTag hashTag, Long hashtagCount) {
         this.hashtagId = hashTag.getId();
         this.hashtag = hashTag.getName();
+        this.count = hashtagCount.intValue();
     }
 }
