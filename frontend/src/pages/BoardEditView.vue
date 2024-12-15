@@ -31,6 +31,11 @@ const hashtags = ref([]);
 
 const text = ref('');
 const title = ref('');
+
+const titleHandler = (event) => {
+  title.value = event.target.value;
+}
+
 const thumbnail = ref('');
 
 async function getFileName(files) {
@@ -89,7 +94,6 @@ const hashtagBoxHandler = async (event) => {
     return;
   }
 
-
 }
 
 const hashtagInput = async (event) => {
@@ -127,7 +131,7 @@ const boardAndEnrollAction = async () => {
   <PageContainer>
     <div class="titleContainer">
       <div class="titleBody">
-        <InputBox  input-type="text" placeholder="제목을 입력하세요" ></InputBox>
+        <InputBox  input-type="text" placeholder="제목을 입력하세요"  :value="title" :value-handler="titleHandler"></InputBox>
       </div>
       <div style="display: flex; justify-content: center; align-items: center">
         <input type="file" id="upload-thumbnail" hidden @change="getFileName($event.target.files)"/>
@@ -138,7 +142,6 @@ const boardAndEnrollAction = async () => {
     </div>
     <div class="editorBody">
       <VMarkdownEditor class="editor" v-model="text" :upload-action="handleUpload" locale="en"></VMarkdownEditor>
-
       <div style="display: flex; gap : 10px; justify-content: space-between">
         <div style="align-self: flex-start; display: flex; gap : 10px; align-items: baseline">
           <div style="border: 1px solid black;">
