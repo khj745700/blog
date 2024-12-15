@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, defineProps, watch } from 'vue'
   import axios from "axios";
   import { marked } from 'marked';
   import { markedHighlight } from "marked-highlight";
@@ -7,7 +7,18 @@
   import 'highlight.js/styles/github-dark.css';
   import 'vue3-markdown/dist/style.css'
 
-  const markdown = ref(``);
+  const props =  defineProps({
+    markdown: {
+      type: String,
+      default: '',
+    },
+
+  });
+
+  watch( () => props.markdown, (newVal) => {
+    mountAction();
+  })
+
   const markdownHtml = ref('');
   const toc = ref([]);
 
@@ -43,7 +54,8 @@
     //     }
     // };
 
-    const output = marked(markdown.value, {renderer, gfm: true});
+    console.log("markdown", props.markdown);
+    const output = marked(props.markdown, {renderer, gfm: true});
     return output;
   });
 
@@ -53,6 +65,10 @@
   let beforeSection = null;
 
   onMounted(async () => {
+    await mountAction();
+  });
+
+  const mountAction = async () => {
     // const path = 'https://raw.githubusercontent.com/khj745700/khj745700/refs/heads/main/README.md';
     // await getMarkdown(path);
 
@@ -77,8 +93,7 @@
 
 
     window.addEventListener('scroll', handleScroll);
-  });
-
+  }
 
   const handleScroll = () => {
 
@@ -102,14 +117,6 @@
     currentSection.value = activeSection;
   }
 
-  const getMarkdown = async (path) => {
-    try {
-      const response = await axios.get(path);
-      markdown.value = response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
 </script>
 
@@ -118,8 +125,6 @@
     <div class="markdownContainer">
       <section class="markdown-body custom" data-theme="light" v-html="markdownHtml"></section>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <ul ref="nav">
       <li
           v-for="content in toc"
@@ -136,6 +141,7 @@
 <style scoped>
 .markdownContainer {
   width: 100%; /* 부모 컨테이너에 딱 맞추기 */
+  min-height: 75vh;
   box-sizing: border-box; /* 패딩 포함해 전체 크기 조정 */
 }
 
