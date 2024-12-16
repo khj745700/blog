@@ -14,7 +14,7 @@ const props = defineProps({
 
 <template>
   <div class="hashTagContainer">
-    <span class="hashTags" v-for="hashtag in hashTags" key="hashtag" @click="hashTagClickEvent" :data-id="hashtag.hashtagId">
+    <span class="hashTags" v-for="hashtag in hashTags" key="hashtag" @click.prevent.self="hashTagClickEvent" :data-id="hashtag.hashtagId">
             #{{hashtag.hashtag}}
     </span>
   </div>

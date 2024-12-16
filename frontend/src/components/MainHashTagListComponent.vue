@@ -34,6 +34,8 @@ onBeforeMount(() => {
 //     count: 6
 //   },
 // ];
+
+
 </script>
 
 
@@ -41,7 +43,7 @@ onBeforeMount(() => {
   <div v-if="hashTags.length !== 0" class="hashTagContainer">
     <div class="hashTagTitle">TagList</div>
     <div class="borderBottom"></div>
-      <div class="hashtag" v-for="hashTag in hashTags" :key="hashTag.hashtagId">{{hashTag.hashtag}} ({{hashTag.count}})</div>
+      <div class="hashtag" v-for="hashTag in hashTags" :key="hashTag.hashtagId" @click="$router.push({name: 'main', query:{hashTagId:hashTag.hashtagId, hn:hashTag.hashtag}})">{{hashTag.hashtag}} ({{hashTag.count}})</div>
   </div>
 </template>
 

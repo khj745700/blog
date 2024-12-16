@@ -1,7 +1,7 @@
 <script setup>
 import HashTagListComponent from "@/components/HashTagListComponent.vue";
 import {onBeforeMount, ref, onMounted, onUnmounted} from "vue";
-import {useRoute} from "vue-router";
+import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import {getBoardPaging, getBoardsByHashTag} from "@/api/board/FindBoard.js";
 
 const route = useRoute();
@@ -10,6 +10,10 @@ const boards = ref([]);  // 게시글 목록
 let page = ref(0);       // 페이지 번호
 let isEnd = ref(false);  // 마지막 페이지 여부
 let isLoading = ref(false); // 데이터 요청 중 여부
+const hashTag = ref(null);
+
+const router = useRouter();
+
 
 // 데이터 불러오는 함수
 const loadBoards = () => {
@@ -35,6 +39,8 @@ const loadBoards = () => {
   }
 };
 
+
+
 // 스크롤 이벤트 핸들러
 const handleScroll = () => {
   const bottomReached =
@@ -46,7 +52,17 @@ const handleScroll = () => {
 };
 
 // 컴포넌트 마운트 시 초기 데이터 로드 및 이벤트 추가
-onBeforeMount(() => loadBoards());
+onBeforeMount(() => {
+  loadBoards();
+
+  if(route.query.hn != null) {
+    hashTag.value = route.query.hn ;
+  }
+});
+
+onBeforeRouteUpdate((to, from) => {
+  hashTag.value = to.query.hn;
+})
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -59,23 +75,39 @@ onUnmounted(() => {
 
 // 날짜 파싱 함수
 const splitDate = (date) => date.split("T")[0];
+
+const hashTagClickEvent = (event) => {
+  event.stopPropagation();
+  const id = event.target.dataset.id;
+  const hashtag = event.target.innerText.replace("#","");
+
+  router.push({
+    name: 'main',
+    query: {hashTagId : id, hn : hashtag}
+  })
+}
 </script>
 
 <template>
   <div class="boardContainer">
-    <div v-if="boards.length === 0">게시글이 없습니다.</div>
-    <div class="componentContainer" v-for="board in boards" :key="board.id" @click="$router.push({name : 'board', params:{id:board.id}})">
-      <div v-if="board.thumbnailUrl == null" class="dummyImage"></div>
-      <img :src="board.thumbnailUrl" class="dummyImage">
-      <div class="componentBody">
-        <p class="componentDate">{{ splitDate(board.wroteDate) }}</p>
-        <p class="componentTitle">{{ board.title }}</p>
-        <HashTagListComponent :hash-tags="board.hashTags"/>
+    <div>
+      <div v-if="boards.length === 0">게시글이 없습니다.</div>
+      <div v-if="boards.length !== 0 && route.query.hashTagId != null"><strong id="hashTagTitle">{{hashTag}}</strong>으로 검색된 결과의 게시글입니다.</div>
+    </div>
+
+    <div class="boardContainer">
+      <div class="componentContainer" v-for="board in boards" :key="board.id" @click="$router.push({name : 'board', params:{id:board.id}})">
+        <div v-if="board.thumbnailUrl == null" class="dummyImage"></div>
+        <img :src="board.thumbnailUrl" class="dummyImage">
+        <div class="componentBody">
+          <p class="componentDate">{{ splitDate(board.wroteDate) }}</p>
+          <p class="componentTitle">{{ board.title }}</p>
+          <HashTagListComponent :hash-tags="board.hashTags" :hash-tag-click-event="hashTagClickEvent"/>
+        </div>
       </div>
     </div>
     <!-- 로딩 표시 -->
-    <div v-if="isLoading" class="loading">로딩 중...</div>
-    <div v-if="isEnd" class="endMessage">더 이상 데이터가 없습니다.</div>
+
   </div>
 </template>
 
@@ -86,6 +118,10 @@ const splitDate = (date) => date.split("T")[0];
   flex-wrap: wrap;
   gap: 30px;
   justify-content: center;
+}
+
+#hashTagTitle {
+  font-size: 1.3rem;
 }
 
 .componentContainer {
