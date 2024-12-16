@@ -18,6 +18,7 @@ public class BoardView {
     private String description;
     private LocalDateTime wroteDate;
     private Boolean isHidden;
+    private String thumbnailUrl;
     private List<HashTagView> hashTags;
 
     public BoardView(Board board) {
@@ -26,5 +27,6 @@ public class BoardView {
         this.description = board.getDescription();
         this.wroteDate = board.getWroteDate();
         this.isHidden = board.getIsHidden();
+        this.thumbnailUrl = board.getThumbnailUrl();
     }
 }

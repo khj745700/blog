@@ -108,7 +108,7 @@ public class SecurityConfig {
         });
 
         http.authorizeHttpRequests(
-                (auth) -> auth.requestMatchers("/", "/auth/**", "/health-check", "/board/**", "/comment/**" , "/resources/**").permitAll()
+                (auth) -> auth.requestMatchers("/", "/auth/**", "/health-check", "/comment/**" , "/resources/**", "/user/profile/**", "/hashtags/counts", "/hashtags/search", "/boards/paging", "/boards/search", "/boards/{boardId:^[0-9]*$}").permitAll()
                         .anyRequest().authenticated());
         http.addFilterAt(jsonLoginAuthenticationFilter(authenticationManager),
                 UsernamePasswordAuthenticationFilter.class);

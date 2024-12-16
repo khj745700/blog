@@ -23,7 +23,7 @@ public class HashTagSaver {
        return new HashTagView(hashTagRepository.save(hashTag));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void saveHashTagsByBoardId(List<Integer> hashTagIds, Board board) {
         List<HashTagList> hashTagLists = hashTagIds.stream().map(id -> new HashTagList(hashTagRepository.getReferenceById(id), board)).toList();
         hashTagListRepository.saveAll(hashTagLists);

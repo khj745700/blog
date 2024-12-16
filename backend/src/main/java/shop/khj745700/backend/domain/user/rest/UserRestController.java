@@ -44,7 +44,7 @@ public class UserRestController {
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity<UserDto> getProfile(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> getProfile(@PathVariable Integer id) {
         UserDto userDto = userFindService.userFind(id);
         return ResponseEntity.ok(userDto);
     }
