@@ -15,6 +15,7 @@ const hashTag = ref(null);
 const router = useRouter();
 
 
+
 // 데이터 불러오는 함수
 const loadBoards = () => {
   if (isEnd.value || isLoading.value) return; // 이미 마지막 페이지이거나 로딩 중이면 중단
@@ -39,7 +40,11 @@ const loadBoards = () => {
   }
 };
 
+loadBoards();
 
+if(route.query.hn != null) {
+  hashTag.value = route.query.hn ;
+}
 
 // 스크롤 이벤트 핸들러
 const handleScroll = () => {
@@ -53,11 +58,7 @@ const handleScroll = () => {
 
 // 컴포넌트 마운트 시 초기 데이터 로드 및 이벤트 추가
 onBeforeMount(() => {
-  loadBoards();
 
-  if(route.query.hn != null) {
-    hashTag.value = route.query.hn ;
-  }
 });
 
 onBeforeRouteUpdate((to, from) => {
@@ -65,6 +66,9 @@ onBeforeRouteUpdate((to, from) => {
 })
 
 onMounted(() => {
+  loadBoards();
+
+
   window.addEventListener("scroll", handleScroll);
 });
 

@@ -20,33 +20,29 @@ const sessions = ref(false);
 
 const router = useRouter();
 
-onBeforeMount(() => {
-
-});
 const hashTags = ref([]);
 
 const route = useRoute();
 
-onBeforeMount(async () => {
-  sessionCheck(()=> {
-    sessions.value = true;
-  }, () => {
-    sessions.value = false;
-  })
+sessionCheck(()=> {
+  sessions.value = true;
+}, () => {
+  sessions.value = false;
+})
 
-  await getProfile().then((res) => {
-    nickname.value = res.data.nickname;
-  })
+getProfile().then((res) => {
+  nickname.value = res.data.nickname;
+})
 
-  await getBoardDetails(route.params.id)
-      .then(res => {
-        const body = res.data;
-        title.value = body.title;
-        markdown.value = body.description;
-        date.value = body.wroteDate.split('T')[0];
-        hashTags.value = body.hashTags;
-      })
-});
+getBoardDetails(route.params.id)
+    .then(res => {
+      const body = res.data;
+      title.value = body.title;
+      markdown.value = body.description;
+      date.value = body.wroteDate.split('T')[0];
+      hashTags.value = body.hashTags;
+    })
+
 
 const portfolioRedirect = () => {
   window.open("https://portfolio.khj745700.shop", "_blank");

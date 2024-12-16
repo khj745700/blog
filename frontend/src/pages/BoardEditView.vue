@@ -62,6 +62,9 @@ onBeforeMount(() => {
         thumbnail.value = body.thumbnailUrl;
         text.value = body.description;
         hashtags.value = body.hashTags;
+        if(thumbnail.value != null) {
+          setThumbnail();
+        }
       });
 });
 
@@ -137,8 +140,7 @@ const boardAndEnrollAction = async () => {
       <div style="display: flex; justify-content: center; align-items: center">
         <input type="file" id="upload-thumbnail" hidden @change="getFileName($event.target.files)"/>
         <label for="upload-thumbnail">
-          <img v-if="thumbnail === ''" src="@/assets/camera.png" id="preview"/>
-          <img v-if="thumbnail !== ''" :src="thumbnail" id="preview"/>
+          <img src="@/assets/camera.png" id="preview"/>
         </label>
       </div>
     </div>

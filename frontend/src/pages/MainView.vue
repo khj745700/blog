@@ -13,13 +13,12 @@ const router = useRouter();
 
 const sessions = ref(false);
 
-onBeforeMount(() => {
-  sessionCheck(()=> {
-    sessions.value = true;
-  }, () => {
-    sessions.value = false;
-  })
-});
+sessionCheck(()=> {
+  sessions.value = true;
+}, () => {
+  sessions.value = false;
+})
+
 
 const boardEnrollButtonClick = () => {
   tempBoardRegister((res) => {

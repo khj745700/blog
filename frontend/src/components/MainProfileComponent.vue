@@ -14,14 +14,13 @@ const nickname = ref('')
 const description = ref('');
 const imageUrl = ref('');
 
-onBeforeMount(() => {
-  getProfile().then(res => {
-    const body = res.data;
-    nickname.value = body.nickname;
-    description.value = body.description;
-    imageUrl.value = body.imageUrl;
-  }).catch(err=> console.error(err));
-});
+getProfile().then(res => {
+  const body = res.data;
+  nickname.value = body.nickname;
+  description.value = body.description;
+  imageUrl.value = body.imageUrl;
+}).catch(err=> console.error(err));
+
 
 const portfolioRedirect = () => {
   window.open("https://portfolio.khj745700.shop", "_blank");
