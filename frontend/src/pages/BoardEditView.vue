@@ -61,7 +61,7 @@ onBeforeMount(() => {
         title.value = body.title;
         thumbnail.value = body.thumbnailUrl;
         text.value = body.description;
-        // hashtags.value = body.hashTags;
+        hashtags.value = body.hashTags;
       });
 });
 
