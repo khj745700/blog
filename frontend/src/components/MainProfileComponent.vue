@@ -41,7 +41,7 @@ const portfolioRedirect = () => {
           </svg>
         </a>
         <span @click="portfolioRedirect" class="portfolioButton">
-          포트폴리오 보러가기
+          포트폴리오
         </span>
       </div>
 
