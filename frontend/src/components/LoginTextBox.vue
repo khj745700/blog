@@ -41,7 +41,7 @@ const focusHandler = (value) => {
 <template>
     <div :class="[{componentContainer : true}, {focus : isFocus===true},  {dark : isDark}]">
       <Label :content="label" width="8"/>
-      <InputBox :input-type="inputType" @on-blur="blurHandler" @on-focus="focusHandler" :value="value" @keyup="valueHandler" />
+      <InputBox :input-type="inputType" @on-blur="blurHandler" @on-focus="focusHandler" :value="value" @input="valueHandler" />
     </div>
 </template>
 

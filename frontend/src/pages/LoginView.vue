@@ -6,12 +6,14 @@ import RippleButton from "@/atomic/RippleButton.vue";
 import loginRequest from "@/api/user/Login.js";
 import {ref} from "vue";
 import {showToast} from "@/utils/toast.js";
+import {useRouter} from "vue-router";
 
-
+const router = useRouter();
 
 const loginClick = () => {
   loginRequest(username.value, password.value, () => {
     showToast("로그인 성공!", "success");
+    router.push("/");
   }, (err) => {
     showToast('로그인 실패!', "error");
   });
@@ -22,7 +24,6 @@ const password = ref('');
 
 const usernameHandler = (event) => {
   username.value = event.target.value;
-  console.log(username.value);
 }
 
 const passwordHandler = (event) => {

@@ -30,7 +30,7 @@ onUnmounted(() => {
   <div class="header" :class="{'hidden': !showHeader}">
     <div class="header__inner">
       <div class="logoWrap">
-      <div class="header__logo">Kim Hyunjin</div>
+      <div class="header__logo" @click="$router.push('/')">Kim Hyunjin</div>
       <div class="logo_inner">
       </div>
     </div>
@@ -46,7 +46,7 @@ onUnmounted(() => {
   width: 100%;
   z-index: 1000;
   top: 0;
-  transition: opacity 1.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .header__inner {
@@ -61,7 +61,7 @@ onUnmounted(() => {
 }
 
 .hidden {
-  opacity: 0.4;
+  transform: translateY(-100px);
 }
 
 .header__logo {
