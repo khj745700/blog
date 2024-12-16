@@ -6,7 +6,7 @@ import MarkdownViewerComponent from "@/components/MarkdownViewerComponent.vue";
 import HashTagListComponent from "@/components/HashTagListComponent.vue";
 import getProfile from "@/api/user/Profile.js";
 import {getBoardDetails} from "@/api/board/FindBoard.js";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import sessionCheck from "@/api/user/SessionCheck.js";
 
 
@@ -17,6 +17,8 @@ const date = ref('');
 const markdown = ref('');
 
 const sessions = ref(false);
+
+const router = useRouter();
 
 onBeforeMount(() => {
 
@@ -45,6 +47,21 @@ onBeforeMount(async () => {
         hashTags.value = body.hashTags;
       })
 });
+
+const portfolioRedirect = () => {
+  window.open("https://portfolio.khj745700.shop", "_blank");
+}
+
+const hashTagClickEvent = (event) => {
+  event.stopPropagation();
+  const id = event.target.dataset.id;
+  const hashtag = event.target.innerText.replace("#","");
+
+  router.push({
+    name: 'main',
+    query: {hashTagId : id, hn : hashtag}
+  })
+}
 </script>
 
 
@@ -54,9 +71,9 @@ onBeforeMount(async () => {
     <div class="title">{{title}}</div>
     <div class="semiProfileContainer">
       <div style="display: flex; gap: 1rem;">
-        <p style="color: darkgoldenrod; font-weight: bolder; font-size: 1.1rem">@{{nickname}}</p> <p class="date">{{date}}</p>
+        <p style="color: darkgoldenrod; font-weight: bolder; font-size: 1.1rem" @click="portfolioRedirect">@{{nickname}}</p> <p class="date">{{date}}</p>
       </div>
-      <HashTagListComponent :hash-tags="hashTags"/>
+      <HashTagListComponent :hash-tags="hashTags" :hash-tag-click-event="hashTagClickEvent"/>
     </div>
     <MarkdownViewerComponent class="markdownContainer" :markdown="markdown"/>
   </div>
