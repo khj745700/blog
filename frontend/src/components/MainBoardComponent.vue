@@ -25,7 +25,7 @@ const loadBoards = () => {
     getBoardsByHashTag(page.value, 20, route.query.hashTagId).then((res) => {
       const body = res.data;
       boards.value.push(...body.content);
-      isEnd.value = body.end;
+      isEnd.value = body.last;
       page.value += 1; // 다음 페이지 준비
       isLoading.value = false;
     });
@@ -33,7 +33,7 @@ const loadBoards = () => {
     getBoardPaging(page.value, 20).then((res) => {
       const body = res.data;
       boards.value.push(...body.content);
-      isEnd.value = body.end;
+      isEnd.value = body.last;
       page.value += 1; // 다음 페이지 준비
       isLoading.value = false;
     });
@@ -102,7 +102,7 @@ const hashTagClickEvent = (event) => {
     <div class="boardContainer">
       <div class="componentContainer" v-for="board in boards" :key="board.id" @click="$router.push({name : 'board', params:{id:board.id}})">
         <div v-if="board.thumbnailUrl == null" class="dummyImage"></div>
-        <img :src="board.thumbnailUrl" class="dummyImage">
+        <img :src="board.thumbnailUrl" class="dummyImage" >
         <div class="componentBody">
           <p class="componentDate">{{ splitDate(board.wroteDate) }}</p>
           <p class="componentTitle">{{ board.title }}</p>
@@ -118,10 +118,9 @@ const hashTagClickEvent = (event) => {
 <style scoped>
 .boardContainer {
   display: flex;
-  width: calc(54rem + 60px);
   flex-wrap: wrap;
   gap: 30px;
-  justify-content: center;
+  flex-direction: column;
 }
 
 #hashTagTitle {
@@ -129,11 +128,13 @@ const hashTagClickEvent = (event) => {
 }
 
 .componentContainer {
-  width: 27rem;
+  max-width: 27rem;
+
   display: flex;
   flex-direction: column;
   border: 1px solid darkgoldenrod;
   transition: transform 0.3s, box-shadow 0.3s;
+  flex: 1 1 calc(50% - 30px);
 }
 
 .componentContainer:hover {
@@ -143,8 +144,9 @@ const hashTagClickEvent = (event) => {
 
 .dummyImage {
   width: 100%;
-  height: 15rem;
-  background-color: lightgray;
+  height: 15em;
+  object-fit: cover;
+
 }
 
 .componentTitle {
@@ -180,5 +182,13 @@ const hashTagClickEvent = (event) => {
   font-size: 1.2rem;
   color: darkred;
   margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .componentContainer {
+    min-width: 27rem;
+    height: auto;
+    flex: 1 1 calc(100% - 15px);
+  }
 }
 </style>

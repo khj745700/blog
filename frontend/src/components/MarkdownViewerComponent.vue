@@ -121,7 +121,7 @@
 </script>
 
 <template>
-  <div style="width:100%; display: flex">
+  <div class="componentContainer">
     <div class="markdownContainer">
       <section class="markdown-body custom" data-theme="light" v-html="markdownHtml"></section>
     </div>
@@ -139,6 +139,12 @@
 </template>
 
 <style scoped>
+
+.componentContainer {
+  width: 100%;
+  display: flex;
+}
+
 .markdownContainer {
   width: 100%; /* 부모 컨테이너에 딱 맞추기 */
   min-height: 75vh;
@@ -203,6 +209,17 @@ ul li {
 .active {
   color : darkgoldenrod;
   font-weight: bolder;
+}
+
+
+@media screen and (max-width: 1300px){
+  ul {
+    display: none;
+  }
+}
+
+@media screen and (max-width: ) {
+
 }
 
 </style>

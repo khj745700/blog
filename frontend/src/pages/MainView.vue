@@ -30,43 +30,65 @@ const boardEnrollButtonClick = () => {
 </script>
 
 <template>
-<PageContainer >
-  <MainProfileComponent />
-  <div class="bodyContainer">
-    <MainBoardComponent />
-    <div class="hashTagContainer">
-      <MainHashTagListComponent style="align-self: flex-start"/>
+  <PageContainer>
+    <MainProfileComponent />
+
+    <div style="position: relative">
+      <div class="bodyContainer">
+        <MainBoardComponent />
+
+      </div>
+      <div class="hashTagContainer">
+        <MainHashTagListComponent/>
+      </div>
     </div>
-    </div>
-  <div v-if="sessions" class="boardEnrollButton" @click="boardEnrollButtonClick">+</div>
-</PageContainer>
+    <div v-if="sessions" class="boardEnrollButton" @click="boardEnrollButtonClick">+</div>
+  </PageContainer>
+
+
 </template>
 
 <style scoped>
-  .bodyContainer {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-  }
+.bodyContainer {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
 
+.hashTagContainer {
+  display: flex;
+  flex-direction: column;
+  color: darkgoldenrod;
+  gap : 20px;
+
+  width: 200px;
+
+  position: absolute;
+  top: 0;
+  right: -130px;
+}
+
+.boardEnrollButton {
+  border-radius: 50%;
+  background-color: darkgoldenrod;
+  position: fixed;
+  bottom: 4rem;
+  right: 4rem;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  color: white;
+  font-size: 4rem;
+}
+
+@media screen and (max-width: 1400px) {
   .hashTagContainer {
-    display: flex;
-    flex-direction: column;
-    color: darkgoldenrod;
-    gap : 20px;
+    display: none;
 
   }
+}
 
-  .boardEnrollButton {
-    border-radius: 50%;
-    background-color: darkgoldenrod;
-    position: fixed;
-    bottom: 4rem;
-    right: 4rem;
-    width: 4rem;
-    height: 4rem;
-    text-align: center;
-    color: white;
-    font-size: 4rem;
-  }
+
+
 </style>

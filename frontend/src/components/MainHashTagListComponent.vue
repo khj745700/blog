@@ -61,13 +61,7 @@ getHashTagAll().then(res => hashTags.value = res.data);
     font-weight: bolder;
   }
 
-  .hashTagContainer {
-    display: flex;
-    flex-direction: column;
-    color: darkgoldenrod;
-    gap : 20px;
 
-  }
 
   .borderBottom {
     border-bottom: 1px solid darkgoldenrod;

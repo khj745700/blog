@@ -94,7 +94,7 @@ const hashTagClickEvent = (event) => {
   }
 
   .body {
-    width: 64%;
+    width: 95%;
     height: 100%;
     margin-top: 100px;
     display: flex;
@@ -129,4 +129,5 @@ const hashTagClickEvent = (event) => {
     color: white;
     font-size: 4rem;
   }
+
 </style>

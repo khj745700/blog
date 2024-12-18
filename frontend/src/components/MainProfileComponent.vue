@@ -52,7 +52,7 @@ const portfolioRedirect = () => {
 
 <style scoped>
   .componentContainer {
-    width: 64%;
+    width: 100%;
     height: 10rem;
     border-bottom: 1px solid darkgoldenrod;
     margin-bottom: 30px;
